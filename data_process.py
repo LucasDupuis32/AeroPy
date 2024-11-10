@@ -1,5 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
+
+
 c = 0.45 # chord length
 # density calculator https://www.engineeringtoolbox.com/air-density-specific-weight-d_600.html
 rho = 1.237
@@ -36,22 +38,47 @@ def compute_cp(x, p, Uinf):
 def reynolds(Uinf):
     return Uinf * c / v
 
-def plot_cp(x, cp, AoA, Re):
+def plot_cp(x, cp, AoA, Re, y):
     plt.figure(figsize=(10, 6))
     plt.plot(x/c, cp, color='black', linestyle='-', marker='o', markersize=4)
     plt.xlabel('x/c')
     plt.ylabel('Cp')
-    plt.title(f"NACA018 Pressure Coefficient, AoA = {AoA}°, Re = {Re}")
+    plt.title(f"NACA018 Pressure Coefficient, AoA = {AoA}°, Re = {round(Re)}")
     plt.gca().invert_yaxis()
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.show()
 
+def compute_cl(x, cp, y):
+    cp_u = []
+    cp_l = []
+    x_u = []
+    for i in range((len(y))):
+        if y[i] > 0:
+            cp_u.append(cp[i])
+            x_u.append(x[i])
+        else: cp_l.append(cp[i])
+    cp_u = np.array(cp_u)
+    cp_l = np.array(cp_l)
+    x_u = np.array(x_u)
+
+    # There are 20 data points on the lower side, and 19 on the upper side.
+    # Might be a better idea to interpolate a point on the upper side instead
+    # of deleting the 20th lower point ?
+    cp_l = np.delete(cp_l, 19)
+
+    cl = np.trapezoid(cp_l - cp_u, x_u)
+
+    return cl
+
+
 def main():
     AoA, Uinf, x, y, p = extract_data(file_path)
     Re = reynolds(Uinf)
-    print(f"Reynolds number = {Re}")
+    print(f"Reynolds number: Re = {Re}")
     cp = compute_cp(x, p, Uinf)
-    plot_cp(x, cp, AoA, Re)
+    cl = compute_cl(x, cp, y)
+    print(f"Lift coefficient: c_l = {cl}")
+    plot_cp(x, cp, AoA, Re, y)
 
 main()
 
