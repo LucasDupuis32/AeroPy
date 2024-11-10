@@ -4,7 +4,7 @@ c = 0.45 # chord length
 # density calculator https://www.engineeringtoolbox.com/air-density-specific-weight-d_600.html
 rho = 1.237
 # kinematic viscosity calculator https://www.engineeringtoolbox.com/air-absolute-kinematic-viscosity-d_601.html
-v = 14.34
+v = 14.34e-6
 
 # define file path to data set
 file_path = ('group_8/group_8_test_4.dat')
@@ -30,8 +30,7 @@ def extract_data(file_path):
 def compute_cp(x, p, Uinf):
     cp = np.zeros_like(p)
     for i in range(len(p)):
-        cp[i] = (p[i]) / (0.5 * rho * Uinf)
-        print(cp[i])
+        cp[i] = (p[i]) / (0.5 * rho * Uinf ** 2)
     return cp
 
 def reynolds(Uinf):
@@ -50,6 +49,7 @@ def plot_cp(x, cp, AoA, Re):
 def main():
     AoA, Uinf, x, y, p = extract_data(file_path)
     Re = reynolds(Uinf)
+    print(f"Reynolds number = {Re}")
     cp = compute_cp(x, p, Uinf)
     plot_cp(x, cp, AoA, Re)
 
