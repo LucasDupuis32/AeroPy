@@ -39,7 +39,7 @@ def reynolds(Uinf):
 
 def plot_cp(x, cp, AoA, Re):
     plt.figure(figsize=(10, 6))
-    plt.plot(x/c, cp, label='NASA exp', color='black', linestyle='-', marker='o', markersize=4)
+    plt.plot(x/c, cp, color='black', linestyle='-', marker='o', markersize=4)
     plt.xlabel('x/c')
     plt.ylabel('Cp')
     plt.title(f"NACA018 Pressure Coefficient, AoA = {AoA}°, Re = {Re}")
