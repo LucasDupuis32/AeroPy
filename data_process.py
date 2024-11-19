@@ -77,12 +77,14 @@ def main():
     AoA, Uinf, x, y, p = extract_data(file_path)
     Re = reynolds(Uinf)
     print(f"Reynolds number: Re = {Re}")
+    print(f"Angle of attack: alpha = {AoA}°")
     cp = compute_cp(p, Uinf)
     cl = compute_cl(x, cp, y)
-    print(f"Lift coefficient: c_l = {cl}")
+    print(f"Lift coefficient: c_l = {cl:.4f}")
     plot_cp(x, cp, AoA, Re, y)
 
-main()
+if __name__ == '__main__':
+    main()
 
 
 
