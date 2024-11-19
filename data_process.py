@@ -1,7 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-
 c = 0.45 # chord length
 # density calculator https://www.engineeringtoolbox.com/air-density-specific-weight-d_600.html
 rho = 1.237
@@ -10,6 +9,7 @@ v = 14.34e-6
 
 # define file path to data set
 file_path = ('group_8/group_8_test_4.dat')
+#file_path = ('common_data/common_test_3.dat')
 
 def extract_data(file_path):
     with open(file_path, 'r') as f:
@@ -29,7 +29,7 @@ def extract_data(file_path):
         p = np.array(data[:, 2])
     return AoA, Uinf, x, y, p
 
-def compute_cp(x, p, Uinf):
+def compute_cp(p, Uinf):
     cp = np.zeros_like(p)
     for i in range(len(p)):
         cp[i] = (p[i]) / (0.5 * rho * Uinf ** 2)
@@ -52,21 +52,23 @@ def compute_cl(x, cp, y):
     cp_u = []
     cp_l = []
     x_u = []
+    x_l = []
+    # separate lower and upper data points
     for i in range((len(y))):
         if y[i] > 0:
             cp_u.append(cp[i])
             x_u.append(x[i])
-        else: cp_l.append(cp[i])
-    cp_u = np.array(cp_u)
+        elif y[i] < 0:
+            cp_l.append(cp[i])
+            x_l.append(x[i])
+    cp_u = np.flip(np.array(cp_u))
     cp_l = np.array(cp_l)
-    x_u = np.array(x_u)
+    x_u = np.flip(np.array(x_u))
+    x_l = np.array(x_l)
 
     # There are 20 data points on the lower side, and 19 on the upper side.
-    # Might be a better idea to interpolate a point on the upper side instead
-    # of deleting the 20th lower point ?
-    cp_l = np.delete(cp_l, 19)
-
-    cl = np.trapezoid(cp_l - cp_u, x_u)
+    # -> separate the integral in two
+    cl = np.trapezoid(cp_l, x_l) - np.trapezoid(cp_u, x_u)
 
     return cl
 
@@ -75,7 +77,7 @@ def main():
     AoA, Uinf, x, y, p = extract_data(file_path)
     Re = reynolds(Uinf)
     print(f"Reynolds number: Re = {Re}")
-    cp = compute_cp(x, p, Uinf)
+    cp = compute_cp(p, Uinf)
     cl = compute_cl(x, cp, y)
     print(f"Lift coefficient: c_l = {cl}")
     plot_cp(x, cp, AoA, Re, y)
