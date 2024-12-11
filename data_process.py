@@ -76,7 +76,7 @@ def compute_cl(x, cp, y):
 def main():
     AoA, Uinf, x, y, p = extract_data(file_path)
     Re = reynolds(Uinf)
-    print(f"Reynolds number: Re = {Re}")
+    print(f"Reynolds number: Re = {Re:.0f}")
     print(f"Angle of attack: alpha = {AoA}°")
     cp = compute_cp(p, Uinf)
     cl = compute_cl(x, cp, y)
