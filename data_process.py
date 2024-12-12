@@ -1,7 +1,10 @@
 import numpy as np
 from matplotlib import pyplot as plt
+import math
+from scipy.integrate import quad
 
 c = 0.45 # chord length
+s = 4 # wing span
 # density calculator https://www.engineeringtoolbox.com/air-density-specific-weight-d_600.html
 rho = 1.237
 # kinematic viscosity calculator https://www.engineeringtoolbox.com/air-absolute-kinematic-viscosity-d_601.html
@@ -72,10 +75,39 @@ def compute_cl(x, cp, y):
 
     return cl
 
+def blockage_correction(U, Re, V, S, K):
+    e = (K * V) / S ** (3 / 2)
+    U = U * (1 + e)
+    Re = Re * (1 + e)
+    return U, Re
+
+def naca0018_area(c):
+    a0 = 0.2969
+    a1 = -0.1260
+    a2 = -0.3516
+    a3 = 0.2843
+    a4 = -0.1015
+
+    # Thickness ratio T = 0.18 for NACA 0018
+    T = 0.18
+
+    # Thickness distribution defined from 0 to 1
+    def yt(x):
+        # Thickness distribution for NACA 00xx
+        y = 2 * T/0.2 * (a0 * math.sqrt(x) + a1 * x + a2 * x ** 2 + a3 * x ** 3 + a4 * x ** 4)
+        return y
+
+    area, _ = quad(yt, 0, 1)
+    return area * c ** 2 # scale the area by the squared chord length
 
 def main():
     AoA, Uinf, x, y, p = extract_data(file_path)
     Re = reynolds(Uinf)
+    S = 2.5 * 1.8 # section area of the wind tunnel
+    V = naca0018_area(c) * s # volume of the work piece
+    print(Uinf, Re)
+    Uinf, Re = blockage_correction(Uinf, Re, V, S, K=0.52)
+    print(Uinf, Re)
     print(f"Reynolds number: Re = {Re:.0f}")
     print(f"Angle of attack: alpha = {AoA}°")
     cp = compute_cp(p, Uinf)
