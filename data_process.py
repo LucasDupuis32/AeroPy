@@ -4,14 +4,15 @@ import math
 from scipy.integrate import quad
 
 c = 0.45 # chord length
-s = 4 # wing span
+s = 1 # wing span
 # density calculator https://www.engineeringtoolbox.com/air-density-specific-weight-d_600.html
 rho = 1.237
 # kinematic viscosity calculator https://www.engineeringtoolbox.com/air-absolute-kinematic-viscosity-d_601.html
 v = 14.34e-6
+S = 2.5 * 1.8 # section area of the wind tunnel
 
 # define file path to data set
-file_path = ('group_8/group_8_test_4.dat')
+file_path = ('group_8/group_8_test_5.dat')
 #file_path = ('common_data/common_test_3.dat')
 
 def extract_data(file_path):
@@ -97,17 +98,15 @@ def naca0018_area(c):
         y = 2 * T/0.2 * (a0 * math.sqrt(x) + a1 * x + a2 * x ** 2 + a3 * x ** 3 + a4 * x ** 4)
         return y
 
-    area, _ = quad(yt, 0, 1)
+    area, _= quad(yt, 0, 1)
     return area * c ** 2 # scale the area by the squared chord length
 
 def main():
     AoA, Uinf, x, y, p = extract_data(file_path)
     Re = reynolds(Uinf)
-    S = 2.5 * 1.8 # section area of the wind tunnel
     V = naca0018_area(c) * s # volume of the work piece
-    print(Uinf, Re)
-    Uinf, Re = blockage_correction(Uinf, Re, V, S, K=0.52)
-    print(Uinf, Re)
+    Uinf, Re = blockage_correction(Uinf, Re, V, S, K=0.52) # apply solid blockage correction
+
     print(f"Reynolds number: Re = {Re:.0f}")
     print(f"Angle of attack: alpha = {AoA}°")
     cp = compute_cp(p, Uinf)
