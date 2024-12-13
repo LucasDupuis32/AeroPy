@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38f805be-d309-4a79-a842-e436fcf4dcfa" name="Changes" comment="compute_cl() is working&#10;need to check if values are coherent using X-Foil" />
+    <list default="true" id="38f805be-d309-4a79-a842-e436fcf4dcfa" name="Changes" comment="solid blockage correction implemented">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_process.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,20 +44,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.data_process.executor&quot;: &quot;Run&quot;,
-    &quot;Python.data_processing.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Panel_method.executor": "Run",
+    "Python.data_process.executor": "Run",
+    "Python.data_processing.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -73,7 +77,10 @@
       <updated>1731234418554</updated>
       <workItem from="1731234419907" duration="17196000" />
       <workItem from="1731859643411" duration="3000" />
-      <workItem from="1732030021628" duration="1855000" />
+      <workItem from="1732030021628" duration="4234000" />
+      <workItem from="1733428753889" duration="1000" />
+      <workItem from="1733950047540" duration="12846000" />
+      <workItem from="1734091707098" duration="5866000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -107,7 +114,39 @@
       <option name="project" value="LOCAL" />
       <updated>1732035239875</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="c_l aren't coherent with X-Foil">
+      <option name="closed" value="true" />
+      <created>1732035687367</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732035687367</updated>
+    </task>
+    <task id="LOCAL-00006" summary="c_l aren't coherent with X-Foil">
+      <option name="closed" value="true" />
+      <created>1733950070018</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1733950070018</updated>
+    </task>
+    <task id="LOCAL-00007" summary="c_l values aren't coherent with X-Foil">
+      <option name="closed" value="true" />
+      <created>1734003705798</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1734003705798</updated>
+    </task>
+    <task id="LOCAL-00008" summary="solid blockage correction implemented">
+      <option name="closed" value="true" />
+      <created>1734009743429</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1734009743429</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,10 +156,14 @@
     <MESSAGE value="." />
     <MESSAGE value="compute_cl() isn't working" />
     <MESSAGE value="compute_cl() is working&#10;need to check if values are coherent using X-Foil" />
-    <option name="LAST_COMMIT_MESSAGE" value="compute_cl() is working&#10;need to check if values are coherent using X-Foil" />
+    <MESSAGE value="c_l aren't coherent with X-Foil" />
+    <MESSAGE value="c_l values aren't coherent with X-Foil" />
+    <MESSAGE value="solid blockage correction implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="solid blockage correction implemented" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/AeroPy$data_process.coverage" NAME="data_process Coverage Results" MODIFIED="1732035178869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AeroPy$Panel_method.coverage" NAME="Panel_method Coverage Results" MODIFIED="1734093623202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
+    <SUITE FILE_PATH="coverage/AeroPy$data_process.coverage" NAME="data_process Coverage Results" MODIFIED="1734101804767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AeroPy$data_processing.coverage" NAME="data_processing Coverage Results" MODIFIED="1731244720973" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

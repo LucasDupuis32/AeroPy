@@ -10,10 +10,11 @@ rho = 1.237
 # kinematic viscosity calculator https://www.engineeringtoolbox.com/air-absolute-kinematic-viscosity-d_601.html
 v = 14.34e-6
 S = 2.5 * 1.8 # section area of the wind tunnel
+naca0018area = 0.123289 # surface area of a unit chord NACA0018, given by XFoil 6.99
+naca0018area = naca0018area * c ** 2
 
-# define file path to data set
-file_path = ('group_8/group_8_test_5.dat')
-#file_path = ('common_data/common_test_3.dat')
+
+
 
 def extract_data(file_path):
     with open(file_path, 'r') as f:
@@ -82,31 +83,24 @@ def blockage_correction(U, Re, V, S, K):
     Re = Re * (1 + e)
     return U, Re
 
-def naca0018_area(c):
-    a0 = 0.2969
-    a1 = -0.1260
-    a2 = -0.3516
-    a3 = 0.2843
-    a4 = -0.1015
-
-    # Thickness ratio T = 0.18 for NACA 0018
-    T = 0.18
-
-    # Thickness distribution defined from 0 to 1
-    def yt(x):
-        # Thickness distribution for NACA 00xx
-        y = 2 * T/0.2 * (a0 * math.sqrt(x) + a1 * x + a2 * x ** 2 + a3 * x ** 3 + a4 * x ** 4)
-        return y
-
-    area, _= quad(yt, 0, 1)
-    return area * c ** 2 # scale the area by the squared chord length
-
 def main():
+    # print the AoA and Re for every data set
+    for i in range(0, 8):
+        file_path = (f'group_8/group_8_test_{i}.dat')
+        AoA, Uinf, x, y, p = extract_data(file_path)
+        Re = reynolds(Uinf)
+        V = naca0018area * s
+        _, Re = blockage_correction(Uinf, Re, V, S, K=0.52)
+        print(f"data set {i} : AoA = {AoA}, Uinf = {Uinf}, Re = {Re}")
+
+    # compute c_l for specific data set
+    file_path = ('group_8/group_8_test_7.dat')
     AoA, Uinf, x, y, p = extract_data(file_path)
     Re = reynolds(Uinf)
-    V = naca0018_area(c) * s # volume of the work piece
+    V = naca0018area * s # volume of the work piece
     Uinf, Re = blockage_correction(Uinf, Re, V, S, K=0.52) # apply solid blockage correction
 
+    print()
     print(f"Reynolds number: Re = {Re:.0f}")
     print(f"Angle of attack: alpha = {AoA}°")
     cp = compute_cp(p, Uinf)
